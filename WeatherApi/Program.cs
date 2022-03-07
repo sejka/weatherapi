@@ -8,9 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<WeatherDataBlobService>();
-builder.Services.AddTransient<CSVToDataPointConverter>();
-builder.Services.AddTransient<WeatherDataService>();
+builder.Services.AddTransient<IWeatherDataBlobService, WeatherDataBlobService>();
+builder.Services.AddTransient<ICSVToDataPointConverter, CSVToDataPointConverter>();
+builder.Services.AddTransient<IWeatherDataService, WeatherDataService>();
 
 var app = builder.Build();
 
