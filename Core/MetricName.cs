@@ -1,4 +1,4 @@
-﻿namespace API.Core
+﻿namespace Core
 {
     public enum MetricName
     {

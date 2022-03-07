@@ -1,8 +1,15 @@
 ﻿using Azure.Storage.Blobs;
+using Microsoft.Extensions.Configuration;
 
-namespace API.Data
+namespace Core
 {
-    public class WeatherDataBlobService
+    public interface IWeatherDataBlobService
+    {
+        Task<bool> Exists(string blobpath);
+        Task<Stream> OpenStream(string blobpath);
+    }
+
+    public class WeatherDataBlobService : IWeatherDataBlobService
     {
         private readonly IConfiguration _config;
         private readonly string _containerName;
@@ -26,13 +33,6 @@ namespace API.Data
             var blob = _client.GetBlobClient(blobpath);
 
             return await blob.ExistsAsync();
-        }
-
-        public async Task<bool> DownloadBlob(string blobpath, string savepath)
-        {
-            var blob = _client.GetBlobClient(blobpath);
-            await blob.DownloadToAsync(savepath);
-            return true;
         }
 
         public async Task<Stream> OpenStream(string blobpath)
